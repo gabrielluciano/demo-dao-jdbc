@@ -18,12 +18,12 @@ public class Program {
         System.out.println(seller);
 
         System.out.println("\n==== TEST 2: seller findByDepartment ====");
-        List<Seller> list = sellerDao.findByDepartment(new Department(2, null));
-        list.forEach(System.out::println);        
+        List<Seller> sellerList = sellerDao.findByDepartment(new Department(2, null));
+        sellerList.forEach(System.out::println);        
         
         System.out.println("\n==== TEST 3: seller findAll ====");
-        list = sellerDao.findAll();
-        list.forEach(System.out::println);
+        sellerList = sellerDao.findAll();
+        sellerList.forEach(System.out::println);
 
         System.out.println("\n==== TEST 4: seller insert ====");
         Seller newSeller = new Seller(null, "Greg", "greg@gmail.com", LocalDate.now(), 4000.0, new Department(2, null));
@@ -46,5 +46,9 @@ public class Program {
         System.out.println("\n==== TEST 7: department findById ====");
         Department department = departmentDao.findById(2);
         System.out.println(department);
+
+        System.out.println("\n==== TEST 8: department findAll ====");
+        List<Department> departmentList = departmentDao.findAll();
+        departmentList.forEach(System.out::println);
     }
 }
