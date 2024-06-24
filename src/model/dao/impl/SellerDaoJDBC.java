@@ -84,7 +84,7 @@ public class SellerDaoJDBC implements SellerDao {
 
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new DbException("Error inserting Seller: " + e.getMessage());
+            throw new DbException("Error updating Seller: " + e.getMessage());
         } finally {
             DB.closeStatement(stmt);
         }
@@ -101,7 +101,7 @@ public class SellerDaoJDBC implements SellerDao {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new DbException("Error inserting Seller: " + e.getMessage());
+            throw new DbException("Error deleting Seller: " + e.getMessage());
         } finally {
             DB.closeStatement(stmt);
         }
