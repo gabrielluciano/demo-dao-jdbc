@@ -114,7 +114,6 @@ public class SellerDaoJDBC implements SellerDao {
         ResultSet rs = null;
 
         try {
-            conn = DB.getConnection();
             stmt = conn.prepareStatement("""
                     SELECT seller.*, department.Name as DepName
                     FROM seller INNER JOIN department
@@ -144,7 +143,6 @@ public class SellerDaoJDBC implements SellerDao {
         ResultSet rs = null;
 
         try {
-            conn = DB.getConnection();
             stmt = conn.prepareStatement("""
                     SELECT seller.*, department.Name as DepName
                     FROM seller INNER JOIN department
@@ -185,7 +183,6 @@ public class SellerDaoJDBC implements SellerDao {
         ResultSet rs = null;
 
         try {
-            conn = DB.getConnection();
             stmt = conn.prepareStatement("""
                     SELECT seller.*, department.Name as DepName
                     FROM seller INNER JOIN department
