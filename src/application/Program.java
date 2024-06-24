@@ -50,5 +50,10 @@ public class Program {
         System.out.println("\n==== TEST 8: department findAll ====");
         List<Department> departmentList = departmentDao.findAll();
         departmentList.forEach(System.out::println);
+
+        System.out.println("\n==== TEST 9: department insert ====");
+        Department newDepartment = new Department(null, "House");
+        departmentDao.insert(newDepartment);
+        System.out.println("Inserted! New id = " + newDepartment.getId());
     }
 }

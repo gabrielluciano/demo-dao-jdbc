@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +23,33 @@ public class DepartmentDaoJDBC implements DepartmentDao {
 
     @Override
     public void insert(Department department) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'insert'");
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = conn.prepareStatement("""
+                    INSERT INTO department
+                    (Name) VALUES (?)
+                    """, Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1, department.getName());
+
+            int affectedRows = stmt.executeUpdate();
+
+            if (affectedRows > 0) {
+                rs = stmt.getGeneratedKeys();
+                if (rs.next()) {
+                    int id = rs.getInt(1);
+                    department.setId(id);
+                }
+            } else {
+                throw new DbException("Unexpected error! No rows affected!");
+            }
+        } catch (SQLException e) {
+            throw new DbException("Error inserting Department: " + e.getMessage());
+        } finally {
+            DB.closeResultSet(rs);
+            DB.closeStatement(stmt);
+        }
     }
 
     @Override
@@ -86,7 +112,7 @@ public class DepartmentDaoJDBC implements DepartmentDao {
 
             return departments;
         } catch (SQLException e) {
-            throw new DbException("Error getting Department: " + e.getMessage());
+            throw new DbException("Error getting all Departments: " + e.getMessage());
         } finally {
             DB.closeResultSet(rs);
             DB.closeStatement(stmt);
