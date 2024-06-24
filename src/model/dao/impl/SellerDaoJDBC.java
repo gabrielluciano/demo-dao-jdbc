@@ -66,7 +66,6 @@ public class SellerDaoJDBC implements SellerDao {
     @Override
     public void update(Seller seller) {
         PreparedStatement stmt = null;
-        ResultSet rs = null;
 
         try {
             stmt = conn.prepareStatement("""
@@ -87,15 +86,25 @@ public class SellerDaoJDBC implements SellerDao {
         } catch (SQLException e) {
             throw new DbException("Error inserting Seller: " + e.getMessage());
         } finally {
-            DB.closeResultSet(rs);
             DB.closeStatement(stmt);
         }
     }
 
     @Override
     public void deleteById(Integer id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteById'");
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = conn.prepareStatement("DELETE FROM seller WHERE Id = ?",
+                    Statement.RETURN_GENERATED_KEYS);
+
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new DbException("Error inserting Seller: " + e.getMessage());
+        } finally {
+            DB.closeStatement(stmt);
+        }
     }
 
     @Override
